@@ -9,7 +9,9 @@ var child_process = require('child_process');
 var client = {};
 var current_proc = null;
 var selected = 0;
-var current_volume = 100;
+var current_volume = 35;
+var shuffle = false;
+var playlist = [];
 
 client.previous = function() {
   console.log('Previous');
@@ -30,6 +32,9 @@ client.play = function() {
   });
   current_proc.on('exit', function (code) {
     console.log('child process exited with code ' + code);
+    if(code == 0) {
+      client.next();
+    }
   });
 };
 client.pause = function(){
@@ -43,7 +48,11 @@ client.stop = function() {
 };
 client.next = function() {
   console.log('Next');
-  selected++;  
+  if(shuffle) {    
+    selected = Math.floor(Math.random()*playlist.length);
+  } else {
+    selected++;
+  }
   client.stop();
   client.play();
 };
@@ -53,7 +62,10 @@ client.playlist = function(position){
   client.play();
 };
 
-client.shuffle = function() {};
+client.shuffle = function() {
+  shuffle = !shuffle;
+  console.log('Set shuffle', shuffle);
+};
 client.repeat = function() {};
 client.volume = function(volume) {
   if(volume > 100) {
@@ -70,7 +82,6 @@ client.volume = function(volume) {
 
 var Nplay = function() { };
 
-var playlist = [];
 Nplay.run = function() {
 
   var pi = new PathIterator();

@@ -5,6 +5,7 @@ Node frontend for mpg321 with Winamp key bindings.
 Can play mp3 files from the console.
 
 Commands:
+
     z - Previous
     x - Play
     c - Pause
