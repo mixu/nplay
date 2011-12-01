@@ -21,8 +21,8 @@ client.previous = function() {
 };
 client.play = function() {
   client.stop();
-  console.log('mpg321 '+playlist[selected].filename);
-  current_proc = child_process.spawn('mpg321', [ '--gain', current_volume, playlist[selected].filename.replace(' ', '\ ') ]);  
+  console.log('mpg123 '+playlist[selected].filename);
+  current_proc = child_process.spawn('mpg123', [ '--gain', current_volume, playlist[selected].filename ]);  
   current_proc.stdout.on('data', function (data) {
     console.log('stdout: ' + data);
   });
@@ -89,12 +89,12 @@ Nplay.run = function() {
     if(path.extname(filename) == '.mp3') {
       var item = {
         name: path.basename(filename, '.mp3'),
-        filename: filename
+        filename: filename.replace(' ', '\ ')
       };
       playlist.push(item);
     }
   });
-  pi.iterate('/home/mtakada/Downloads/VA', 100);
+  pi.iterate('/mnt/media/Personal/Mx/My Documents/Music/VA', 100);
    var jump_mode = false;
    require('tty').setRawMode(true);    
    process.stdin.resume();
