@@ -11,18 +11,21 @@ var current_proc = null;
 var selected = 0;
 var current_volume = 35;
 var shuffle = false;
+var repeat = false;
 var playlist = [];
 
 client.previous = function() {
   console.log('Previous');
-  selected--;  
+  if(!repeat) {
+    selected--;
+  }
   client.stop();
-  client.play();  
+  client.play();
 };
 client.play = function() {
   client.stop();
   console.log('mpg123 '+playlist[selected].filename);
-  current_proc = child_process.spawn('mpg123', [ '--gain', current_volume, playlist[selected].filename ]);  
+  current_proc = child_process.spawn('mpg123', [ '--gain', current_volume, playlist[selected].filename ]);
   current_proc.stdout.on('data', function (data) {
     console.log('stdout: ' + data);
   });
@@ -38,19 +41,19 @@ client.play = function() {
   });
 };
 client.pause = function(){
-  client.stop();  
+  client.stop();
 };
 client.stop = function() {
   if(current_proc) {
-    current_proc.kill();   
-    current_proc = null; 
+    current_proc.kill();
+    current_proc = null;
   }
 };
 client.next = function() {
   console.log('Next');
-  if(shuffle) {    
+  if(shuffle) {
     selected = Math.floor(Math.random()*playlist.length);
-  } else {
+  } else if(!repeat) {
     selected++;
   }
   client.stop();
@@ -66,7 +69,10 @@ client.shuffle = function() {
   shuffle = !shuffle;
   console.log('Set shuffle', shuffle);
 };
-client.repeat = function() {};
+client.repeat = function() {
+  repeat = !repeat;
+  console.log('Set repeat', repeat);
+};
 client.volume = function(volume) {
   if(volume > 100) {
     volume = 100;
@@ -94,9 +100,15 @@ Nplay.run = function() {
       playlist.push(item);
     }
   });
+  pi.on('end', function() {
+    playlist.sort(function(a, b) {
+      return a.filename.localeCompare(b.filename);
+    });
+    console.log('Scan complete.');
+  });
   pi.iterate('/mnt/media/Personal/Mx/My Documents/Music/VA', 100);
    var jump_mode = false;
-   require('tty').setRawMode(true);    
+   require('tty').setRawMode(true);
    process.stdin.resume();
    process.stdin.on('keypress', function (chunk, key) {
       if (key && key.ctrl && key.name == 'c') {
@@ -113,7 +125,7 @@ Nplay.run = function() {
          } else if(track == -2) {
             jump_mode = false;
             cli.clear();
-         }         
+         }
       } else if(key) {
          switch(key.name) {
             case 'z':
@@ -186,10 +198,10 @@ function autocomplete(chunk, key) {
       } else if(key.name == 'up') {
          selected--;
       } else if(key.name == 'space') {
-         current += ' ';         
+         current += ' ';
       } else if(key.name == 'backspace') {
          current = current.substr(0, current.length-1);
-      }      
+      }
       if(selected > showed-1) {
          selected = showed-1;
       }
@@ -200,10 +212,10 @@ function autocomplete(chunk, key) {
          selected_index = selected;
       }
       cli.clear()
-         .up(1)      
+         .up(1)
          .write("? "+current+"\n")
          .write("*********************************\n");
-               
+
       var showed = 0;
       var search = current.split(" ").filter(function(element){return element.length > 0;});
       var matches = [];
@@ -211,13 +223,13 @@ function autocomplete(chunk, key) {
          matches = [];
          for(var j = 0; j < search.length; j++) {
             var pos = playlist[i].name.toLowerCase().indexOf(search[j]);
-            if( pos > -1) {               
+            if( pos > -1) {
                matches.push(pos);
-            } else {               
+            } else {
               break;
             }
          }
-         if(matches.length == search.length) {            
+         if(matches.length == search.length) {
             var from = 0;
             for(var j = 0; j < matches.length; j++) {
                cli.color('white', (showed == selected));
@@ -225,9 +237,9 @@ function autocomplete(chunk, key) {
                from = matches[j];
                if(showed == selected) {
                   selected_index = i;
-                  cli.color('red', true);              
+                  cli.color('red', true);
                } else {
-                  cli.color('yellow', false);              
+                  cli.color('yellow', false);
                }
                cli.write(playlist[i].name.substring(from, from+search[j].length));
                from += search[j].length;
@@ -239,7 +251,7 @@ function autocomplete(chunk, key) {
             if(showed == 5) {
                break;
             }
-         } else { 
+         } else {
             continue;
          }
       }
