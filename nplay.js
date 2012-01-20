@@ -14,6 +14,8 @@ var shuffle = false;
 var repeat = false;
 var playlist = [];
 
+var tty = require('tty');
+
 client.previous = function() {
   console.log('Previous');
   if(!repeat) {
@@ -25,7 +27,8 @@ client.previous = function() {
 client.play = function() {
   client.stop();
   console.log('mpg123 '+playlist[selected].filename);
-  current_proc = child_process.spawn('mpg123', [ '--gain', current_volume, playlist[selected].filename ]);
+  // '--gain', current_volume,
+  current_proc = child_process.spawn('mpg123', [ '-q', '--long-tag',  playlist[selected].filename.replace(' ', '\ ') ]);
   current_proc.stdout.on('data', function (data) {
     console.log('stdout: ' + data);
   });
@@ -106,10 +109,10 @@ Nplay.run = function() {
     });
     console.log('Scan complete.');
   });
-  pi.iterate('/mnt/media/Personal/Mx/My Documents/Music/VA', 100);
+  pi.iterate('/home/m/Downloads/VA', 100);
    var jump_mode = false;
-   require('tty').setRawMode(true);
    process.stdin.resume();
+   tty.setRawMode(true);
    process.stdin.on('keypress', function (chunk, key) {
       if (key && key.ctrl && key.name == 'c') {
          client.stop();
