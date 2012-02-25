@@ -3,7 +3,7 @@
   "description": "MP3 player frontend for mpg123/mpg321",
   "version": "0.0.1",
   "main": "./nplay.js",
-  "dependencies": {
+  "optionalDependencies": {
     "node-taglib": "git+ssh://git@github.com:mixu/node-taglib.git#master"
   },
   "devDependencies": { },
