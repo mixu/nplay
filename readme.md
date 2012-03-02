@@ -25,4 +25,6 @@ Partial matches are supported, separate terms with a space.
 
 The random playlist is pre-generated when the mode is started, so if you skip past a good song, you can go back to it.
 
+## Filter mode
 
+Filters songs to only rated ones.
