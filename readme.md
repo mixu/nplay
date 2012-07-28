@@ -12,7 +12,7 @@ Can play mp3 files from the console.
 
 z - x - c - v - b is the bottom row on your keyboard.
 
-Commands:
+### Commands:
 
     z - Previous
     x - Play
@@ -23,9 +23,16 @@ Commands:
     r - Repeat
     j - Jump to file by filename search
 
-## Jump mode
+## Playback interface:
+
+![screenshot](https://github.com/mixu/node-winamp/raw/master/doc/playback.png)
+
+Jump to with autocompletion and song selection using up/down/enter keys:
 
 Partial matches are supported, separate terms with a space.
+
+![screenshot](https://github.com/mixu/node-winamp/raw/master/doc/jump_mode.png)
+
 
 ## Shuffle mode
 
