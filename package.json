@@ -3,5 +3,10 @@
   "description": "MP3 player frontend for mpg123/mpg321",
   "version": "0.0.2",
   "main": "./nplay.js",
-  "bin": { "nplay" : "./nplay.js" }
+  "bin": {
+    "nplay": "./nplay.js"
+  },
+  "dependencies": {
+    "keypress": "~0.1.0"
+  }
 }
