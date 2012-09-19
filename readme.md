@@ -1,12 +1,11 @@
 # Nplay
 
-Node frontend for mpg321 / mpg123 / mplayer with Winamp key bindings.
+Node frontend for mplayer with Winamp key bindings.
 
 You need to install:
-- mpg123 (e.g. aptitude install mpg123).
-- optional: mplayer (e.g. aptitude install mplayer).
+- mplayer (e.g. aptitude install mplayer).
 
-mpg123 is used to playback mp3 files, mplayer for other files (m4a, wav).
+mplayer is used for playback (mp3, m4a, wav). Even works on Windows, though you have to set the command in the source.
 
 Can play mp3 files from the console.
 
