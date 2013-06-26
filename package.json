@@ -9,6 +9,12 @@
   "dependencies": {
     "keypress": "~0.1.0"
   },
+  "keywords": [
+    "mp3",
+    "player",
+    "music",
+    "audio"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/mixu/nplay.git"
