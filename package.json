@@ -1,6 +1,6 @@
 {
   "name": "nplay",
-  "description": "MP3 player frontend for mpg123/mpg321",
+  "description": "A terminal MP3 player for all platforms - frontend for mplayer / afplay",
   "version": "0.1.2",
   "main": "./nplay.js",
   "bin": {
