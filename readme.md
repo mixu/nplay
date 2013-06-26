@@ -2,14 +2,19 @@
 
 Node frontend for mplayer with Winamp key bindings.
 
-You need to install:
-- mplayer (e.g. aptitude install mplayer).
-
-mplayer is used for playback (mp3, m4a, wav). Even works on Windows, though you have to set the command in the source.
-
 Can play mp3 files from the console.
 
 z - x - c - v - b is the bottom row on your keyboard.
+
+## Installation
+
+    npm install -g nplay
+
+Installing dependencies:
+
+- Linux: `apt-get install mplayer`
+- OSX: none, uses the builtin `afplayer` command
+- Windows: install [mplayer](https://code.google.com/p/mplayer-for-windows/downloads/list); edit the line with `child_process.spawn` in `./lib/player`
 
 ### Commands:
 
