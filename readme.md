@@ -59,7 +59,7 @@ Partial matches are supported, separate terms with a space.
 
 This is useful for doing things managing files based on their rating:
 
-    nplay --ls | grep "^[4,5]," | sed 's/.,//g' | grep "mp3/mp3-2" | xargs -I {} -p echo {}
+    nplay --ls | grep "^[4,5]," | sed 's/.,//g' | xargs -I {} -p echo {}
 
 Above, you might replace `echo {}` with `cp {} /media/usb` to copy files or `rm {}` to delete the file.
 
