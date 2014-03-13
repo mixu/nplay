@@ -12,7 +12,7 @@ var list = new List();
 
 var isList = process.argv.indexOf('--ls') > -1;
 
-if(process.argv.length > 2) {
+if(process.argv.length > 2 && !isList) {
   var args = process.argv.slice(0);
   // shift off node and script name
   args.shift(); args.shift();
@@ -47,8 +47,8 @@ list.exec(function(err, files) {
           meta = Meta.get(basename),
           rating = (meta && meta.rating ? meta.rating : 0);
 
-      if(file.stat.isFile() && rating > 3) {
-        console.log(file.name);
+      if(file.stat.isFile()) {
+        console.log(rating + ',' + file.name);
       }
     })
     return;
