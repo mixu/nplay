@@ -51,6 +51,20 @@ Partial matches are supported, separate terms with a space.
 
 ![screenshot](https://github.com/mixu/node-winamp/raw/master/doc/jump_mode.png)
 
+## --ls (new in 0.2.x)
+
+`--ls` produces a list of files in the following format: `rating,filename`. E.g.:
+
+    5,/home/m/mp3/foo.mp3
+
+This is useful for doing things managing files based on their rating:
+
+    nplay --ls | grep "^[4,5]," | sed 's/.,//g' | grep "mp3/mp3-2" | xargs -I {} -p echo {}
+
+Above, you might replace `echo {}` with `cp {} /media/usb` to copy files or `rm {}` to delete the file.
+
+Note that the `xargs -I {}` is for OSX compatibility, and `-p` makes xargs confirm each command with y/n.
+
 ## Shuffle mode
 
 The random playlist is pre-generated when the mode is started, so if you skip past a good song, you can go back to it.
