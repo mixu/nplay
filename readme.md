@@ -14,7 +14,9 @@ Installing dependencies:
 
 - Linux: `apt-get install mplayer`
 - OSX: none, uses the builtin `afplayer` command
-- Windows: install [mplayer](https://code.google.com/p/mplayer-for-windows/downloads/list); edit the line with `child_process.spawn` in `./lib/player`
+- Windows: download [mplayer](http://mplayerwin.sourceforge.net/downloads.html), save `mplayer.exe` in the same directory where `nplay.js` is.
+
+I tried using VLC on Windows for playback, but their command line interface is a totally broken and messed up: songs get randomly skipped, the player sometimes just exits without playing, the exit codes are not helpful and the output suppression options do not work as documented etc. - which is why I recommend using mplayer for playback on Windows.
 
 ### Commands:
 
@@ -59,7 +61,7 @@ Partial matches are supported, separate terms with a space.
 
 This is useful for doing things managing files based on their rating:
 
-    nplay --ls | grep "^[4,5]," | sed 's/.,//g' | tr '\n' '\0' | xargs -0 -n 1 -I {} echo {} 
+    nplay --ls | grep "^[4,5]," | sed 's/.,//g' | tr '\n' '\0' | xargs -0 -n 1 -I {} echo {}
 
 Above, you might replace `echo {}` with `cp {} /media/usb` to copy files or `rm {}` to delete the file.
 
