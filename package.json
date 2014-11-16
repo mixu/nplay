@@ -1,7 +1,7 @@
 {
   "name": "nplay",
   "description": "A terminal MP3 player for all platforms - frontend for mplayer / afplay",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "./nplay.js",
   "bin": {
     "nplay": "./nplay.js"
