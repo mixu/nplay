@@ -23,7 +23,6 @@ var pi = require('pipe-iterators'),
 
 
 var listen = require('./lib/listen.js'),
-    commandMode = require('./lib/modes/command.js'),
     Playlist = require('./lib/playlist.js');
 
 Meta.read();
@@ -36,8 +35,9 @@ pi.fromArray(dirs)
   .pipe(pi.filter(function(file) { return validExts[path.extname(file.path)]; }))
   .pipe(pi.map(function(file) {
     // add rating property from metadata
-    var name = path.basename(file.path, '.mp3'),
+    var name = path.basename(file.path, path.extname(file.path)),
         meta = Meta.get(name);
+    file.name = name;
     file.rating = (meta && meta.rating ? meta.rating : 0);
     return file;
   }))
@@ -52,8 +52,6 @@ pi.fromArray(dirs)
     var playlist = new Playlist(files);
 
 
-    listen(
-      commandMode({ playlist: playlist })
-    );
+    listen(playlist);
 
   }));
