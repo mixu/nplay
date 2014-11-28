@@ -39,6 +39,7 @@ pi.fromArray(dirs)
         meta = Meta.get(name);
     file.name = name;
     file.rating = (meta && meta.rating ? meta.rating : 0);
+    file.playCount = (meta && meta.playCount ? meta.playCount : 0);
     return file;
   }))
   .pipe(pi.toArray(function(files) {
