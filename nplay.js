@@ -40,6 +40,7 @@ pi.fromArray(dirs)
     file.name = name;
     file.rating = (meta && meta.rating ? meta.rating : 0);
     file.playCount = (meta && meta.playCount ? meta.playCount : 0);
+    file.lastPlay = (meta && meta.lastPlay ? new Date(meta.lastPlay) : 0);
     return file;
   }))
   .pipe(pi.toArray(function(files) {

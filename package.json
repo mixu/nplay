@@ -9,7 +9,8 @@
   "dependencies": {
     "chalk": "^0.5.1",
     "keypress": "0.1.0",
-    "pipe-iterators": "^1.1.0"
+    "pipe-iterators": "^1.1.0",
+    "timeago": "~0.2.0"
   },
   "keywords": [
     "mp3",
