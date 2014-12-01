@@ -31,10 +31,11 @@ if (shouldReadConfig) {
 if (!config.countChar && !config.starChar) {
   // when nothing is set, do a hybrid mode
   if (typeof config.utf === 'undefined') {
-    // in all environments, the default font seems to
+    // in OSX/Windows, the default font seems to
     // have the musical note char but the star char is messed up
+    // in Linux, it seems the terminal fonts have decent UTF8 support
     config.countChar = '♫';
-    config.starChar = '*';
+    config.starChar = (process.platform === 'linux' ? '★' : '*');
   } else if (config.utf) {
     config.countChar = '♫';
     config.starChar = '★';
