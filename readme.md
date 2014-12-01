@@ -1,16 +1,14 @@
 # Nplay
 
-Node frontend for mplayer with Winamp key bindings.
-
-Can play mp3/m4a/wav/... files from the console.
-
-z - x - c - v - b is the bottom row on your keyboard.
+CLI Node music player - a frontend for mplayer with Winamp key bindings.
 
 ![Demo gif](https://raw.githubusercontent.com/mixu/nplay/master/nplay.gif)
 
 Features:
 
-- smooth, one-character interactions with Winamp key bindings
+- smooth, one-character interactions with Winamp key bindings:
+    - `z - x - c - v - b`: the bottom row of your keyboard works for playback
+    - `j` to enter jump mode 
 - supports *jump to file* with autocomplete
 - songs can have ratings
 - the playlist can be sorted by rating, most frequently played, last played
