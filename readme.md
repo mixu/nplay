@@ -2,62 +2,89 @@
 
 Node frontend for mplayer with Winamp key bindings.
 
-Can play mp3 files from the console.
+Can play mp3/m4a/wav/... files from the console.
 
 z - x - c - v - b is the bottom row on your keyboard.
 
-## Installation
+## Installing
 
     npm install -g nplay
 
-Installing dependencies:
+Install dependencies:
 
 - Linux: `apt-get install mplayer`
 - OSX: none, uses the builtin `afplayer` command
 - Windows: download [mplayer](http://mplayerwin.sourceforge.net/downloads.html), save `mplayer.exe` in the same directory where `nplay.js` is.
 
-I tried using VLC on Windows for playback, but their command line interface is a totally broken and messed up: songs get randomly skipped, the player sometimes just exits without playing, the exit codes are not helpful and the output suppression options do not work as documented etc. - which is why I recommend using mplayer for playback on Windows.
+## Playback interface
 
-// Must set iterm font to Menlo (from Monaco) or some other font that renders
-// utf-8 characters as normal-width characters (rather than double width, which looks terrible!)
-
-
-### Commands:
-
-    z - Previous
-    x - Play
-    c - Pause
-    v - Stop
-    b - Next
-    s - Shuffle mode
-    r - Repeat mode
-    f - Filter mode (filtered by rating >= 3)
-    1...5 - Rate song
-    j - Jump to file by filename search
-
-## Command line
-
-You can pass paths (to directories or to files) to nplay to play the files. Directories are traversed recursively.
-
-    nplay /home/m/mp3
-
-When no arguments are passed, nplay reads ~/.nplay.json and uses the paths set there. The idea is that you are mostly listening to the same library of files:
-
-    {
-      "directories": [ "/home/m/mp3" ]
-    }
-
-## Playback interface:
-
-![screenshot](https://github.com/mixu/node-winamp/raw/master/doc/playback.png)
+![Demo gif](https://raw.githubusercontent.com/mixu/nplay/master/nplay.gif)
 
 Jump to with autocompletion and song selection using up/down/enter keys:
 
 Partial matches are supported, separate terms with a space.
 
-![screenshot](https://github.com/mixu/node-winamp/raw/master/doc/jump_mode.png)
+## Song metadata
 
-## --ls (new in 0.2.x)
+Each song has the following metadata:
+
+- a rating between 1 to 5 (`1 ... 5`)
+- a counter of times the song has been played. A song must play for at least 60 seconds for this counter to be incremented.
+- a date for when the song was last played.
+
+The ratings db is stored as a simple JSON file under `~/.nplay.db.json`. Files are tracked by their file name only (no path), so you can copy the database to a different computer with different paths and still have everything work as long as the file names match. 
+
+## Playback modes
+
+- *Shuffle mode* (`s`): randomly shuffles all the songs. Can be combined with filter mode for a randomized, filtered playlist. 
+- *Filter mode* (`f`): filters the playlist to all the songs with a rating `>= 3`.
+- *Top mode* (`t`): sorts the playlist by the number of times a song has been played, then by rating. Can be combined with filter mode to filter out unrated songs.
+- *Last played mode* (`l`): sorts the playlist by last played
+
+### Commands:
+
+    z - Previous
+    x / Enter - Play
+    c - Pause
+    v - Stop
+    b - Next
+    s - Shuffle mode (can combine with filter mode)
+    r - Repeat mode
+    f - Filter mode (ratings >= 3)
+    t - Top mode (sort by # played, then by rating; can combine with filter mode)
+    l - Last played mode (sort by last played)
+    1...5 - Rate song
+    j - Jump
+    Up/Down/Page Up/Page Down/Home/End - Move in the playlist
+    Ctrl-C - Exit
+
+## Command line
+
+You can pass paths (to directories or to files) to `nplay` to play the files. Directories are traversed recursively.
+
+    nplay /home/m/mp3
+
+When no arguments are passed, nplay reads `~/.nplay.json` and uses the paths set there. The idea is that you are mostly listening to the same library of files:
+
+    {
+      "directories": [ "/home/m/mp3" ]
+    }
+
+## Rendering with utf-8 characters
+
+On OSX and Windows, nplay does not use utf-8 characters for rendering, because the default terminal font produces terrible rendering. 
+
+On OSX, this is fixable: make sure you switch the font from the default `Monaco` font to the `Menlo` font. On Windows, it seems that the default fonts just don't have good rendering for the star character.
+
+Next, enable full utf-8 rendering by adding `"utf": true` to `~/.nplay.json`, e.g.:
+
+```js
+{ "directories": [ '...' ], "utf": true }
+```
+
+This will give you the nicer symbols that you can see in the screenshots.
+
+## Managing media with --ls (since 0.2.x)
 
 `--ls` produces a list of files in the following format: `rating,filename`. E.g.:
 
@@ -70,11 +97,3 @@ This is useful for doing things managing files based on their rating:
 Above, you might replace `echo {}` with `cp {} /media/usb` to copy files or `rm {}` to delete the file.
 
 Note that the `xargs -I {}` is for OSX compatibility, and `-p` makes xargs confirm each command with y/n.
-
-## Shuffle mode
-
-The random playlist is pre-generated when the mode is started, so if you skip past a good song, you can go back to it.
-
-## Filter mode
-
-Filters songs to only rated ones.
