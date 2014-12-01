@@ -6,7 +6,17 @@ Can play mp3/m4a/wav/... files from the console.
 
 z - x - c - v - b is the bottom row on your keyboard.
 
-## Installing
+![Demo gif](https://raw.githubusercontent.com/mixu/nplay/master/nplay.gif)
+
+Features:
+
+- smooth, one-character interactions with Winamp key bindings
+- supports *jump to file* with autocomplete
+- songs can have ratings
+- the playlist can be sorted by rating, most frequently played, last played
+- shuffle, filter and repeat modes
+
+## Install
 
     npm install -g nplay
 
@@ -16,30 +26,10 @@ Install dependencies:
 - OSX: none, uses the builtin `afplayer` command
 - Windows: download [mplayer](http://mplayerwin.sourceforge.net/downloads.html), save `mplayer.exe` in the same directory where `nplay.js` is.
 
-## Playback interface
+## Changelog
 
-![Demo gif](https://raw.githubusercontent.com/mixu/nplay/master/nplay.gif)
-
-Jump to with autocompletion and song selection using up/down/enter keys:
-
-Partial matches are supported, separate terms with a space.
-
-## Song metadata
-
-Each song has the following metadata:
-
-- a rating between 1 to 5 (`1 ... 5`)
-- a counter of times the song has been played. A song must play for at least 60 seconds for this counter to be incremented.
-- a date for when the song was last played.
-
-The ratings db is stored as a simple JSON file under `~/.nplay.db.json`. Files are tracked by their file name only (no path), so you can copy the database to a different computer with different paths and still have everything work as long as the file names match. 
-
-## Playback modes
-
-- *Shuffle mode* (`s`): randomly shuffles all the songs. Can be combined with filter mode for a randomized, filtered playlist. 
-- *Filter mode* (`f`): filters the playlist to all the songs with a rating `>= 3`.
-- *Top mode* (`t`): sorts the playlist by the number of times a song has been played, then by rating. Can be combined with filter mode to filter out unrated songs.
-- *Last played mode* (`l`): sorts the playlist by last played
+- `1.0.0`: Modernized the code base, and significantly improved the UI
+- `0.2.x`: Added `--ls` 
 
 ### Commands:
 
@@ -57,6 +47,23 @@ The ratings db is stored as a simple JSON file under `~/.nplay.db.json`. Files a
     j - Jump
     Up/Down/Page Up/Page Down/Home/End - Move in the playlist
     Ctrl-C - Exit
+
+## Playback modes
+
+- *Shuffle mode* (`s`): randomly shuffles all the songs. Can be combined with filter mode for a randomized, filtered playlist. 
+- *Filter mode* (`f`): filters the playlist to all the songs with a rating `>= 3`.
+- *Top mode* (`t`): sorts the playlist by the number of times a song has been played, then by rating. Can be combined with filter mode to filter out unrated songs.
+- *Last played mode* (`l`): sorts the playlist by last played
+
+## Song metadata
+
+Each song has the following metadata:
+
+- a rating between 1 to 5 (`1 ... 5`)
+- a counter of times the song has been played. A song must play for at least 60 seconds for this counter to be incremented.
+- a date for when the song was last played.
+
+The ratings db is stored as a simple JSON file under `~/.nplay.db.json`. Files are tracked by their file name only (no path), so you can copy the database to a different computer with different paths and still have everything work as long as the file names match. 
 
 ## Command line
 
