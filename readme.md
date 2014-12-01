@@ -18,6 +18,10 @@ Installing dependencies:
 
 I tried using VLC on Windows for playback, but their command line interface is a totally broken and messed up: songs get randomly skipped, the player sometimes just exits without playing, the exit codes are not helpful and the output suppression options do not work as documented etc. - which is why I recommend using mplayer for playback on Windows.
 
+// Must set iterm font to Menlo (from Monaco) or some other font that renders
+// utf-8 characters as normal-width characters (rather than double width, which looks terrible!)
+
+
 ### Commands:
 
     z - Previous

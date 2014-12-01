@@ -20,8 +20,32 @@ if (shouldReadConfig && !existsSync(homePath + '/.nplay.json')) {
 var pi = require('pipe-iterators'),
     dirStream = require('./lib/dir-stream'),
     validExts = { '.mp3': true, '.wav': true, '.m4a': true },
-    dirs = (shouldReadConfig ?
-            require(homePath + '/.nplay.json').directories :
+    config = {},
+    dirs;
+
+if (shouldReadConfig) {
+  config = require(homePath + '/.nplay.json');
+}
+
+// allow explicit override in the config file
+if (!config.countChar && !config.starChar) {
+  // when nothing is set, do a hybrid mode
+  if (typeof config.utf === 'undefined') {
+    // in all environments, the default font seems to
+    // have the musical note char but the star char is messed up
+    config.countChar = '♫';
+    config.starChar = '*';
+  } else if (config.utf) {
+    config.countChar = '♫';
+    config.starChar = '★';
+  } else {
+    config.countChar = '#';
+    config.starChar = '*';
+  }
+}
+
+dirs = (shouldReadConfig ?
+            config.directories :
             process.argv.slice(2).filter(function(str) { return str != '--ls'; })
             );
 
@@ -57,7 +81,6 @@ pi.fromArray(dirs)
 
     var playlist = new Playlist(files);
 
-
-    listen(playlist);
+    listen(playlist, config);
 
   }));
