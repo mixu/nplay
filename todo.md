@@ -1,7 +1,6 @@
 # High priority
 
 - in jump mode, if the song is not found need to reset the playlist filtering!
-- L mode: sort by last played
 
 # Low priority
 
