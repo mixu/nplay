@@ -1,9 +1,4 @@
-# High priority
-
-- in jump mode, if the song is not found need to reset the playlist filtering!
-
-# Low priority
-
+- tweak: reset mode flags on incompatible e.g. when in l mode type f
 - track the current position in the playlist separately from the currently playing song
 - when the current position is different from the currently finished song, play the current song
 - make Esc return back to the currently playing song
