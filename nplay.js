@@ -8,9 +8,10 @@ var existsSync = (fs.existsSync ? fs.existsSync : path.existsSync),
     homePath = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'],
     shouldReadConfig = (process.argv.length <= 2 || isList);
 
-if (shouldReadConfig && !existsSync(homePath+'/.nplay.json')) {
+if (shouldReadConfig && !existsSync(homePath + '/.nplay.json')) {
   console.log('~/.nplay.json does not exist.');
-  console.log('Please create "'+homePath+'/.nplay.json" with paths to your music directories, like this:');
+  console.log('Please create "' + homePath + '/.nplay.json" with ' +
+              'paths to your music directories, like this:');
   console.log('\techo \'{ "directories": [ "/home/m/mp3" ] }\' >> ~/.nplay.json');
   console.log('Alternatively, specify paths as arguments: nplay /home/m/mp3');
   process.exit();
@@ -19,7 +20,10 @@ if (shouldReadConfig && !existsSync(homePath+'/.nplay.json')) {
 var pi = require('pipe-iterators'),
     dirStream = require('./lib/dir-stream'),
     validExts = { '.mp3': true, '.wav': true, '.m4a': true },
-    dirs = (shouldReadConfig ? require(homePath+'/.nplay.json').directories : process.argv.slice(2).filter(function(str) { return str != '--ls'; }));
+    dirs = (shouldReadConfig ?
+            require(homePath + '/.nplay.json').directories :
+            process.argv.slice(2).filter(function(str) { return str != '--ls'; })
+            );
 
 
 var listen = require('./lib/listen.js'),
