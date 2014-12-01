@@ -24,7 +24,7 @@ describe('jump template test', function() {
     ];
 
     it('can render a single track', function() {
-      var raw = jump(songs, songs[0], ['red', 'hot'], 55, 30, true),
+      var raw = jump(songs, songs[0], 'red hot', 55, true),
           actual = raw.map(chalk.stripColor, chalk),
           expected = [
             'Red Hot Chili Peppers - Californication    ♫ 321 ★★★★★',
@@ -37,7 +37,7 @@ describe('jump template test', function() {
     });
 
     it('drops the play count if the col count is too small', function() {
-      var raw = jump(songs, songs[0], ['red', 'hot'], 46, 30, true),
+      var raw = jump(songs, songs[0], 'red hot', 46, true),
           actual = raw.map(chalk.stripColor, chalk),
           expected = [
             'Red Hot Chili Peppers - Californication ★★★★★',
@@ -50,7 +50,7 @@ describe('jump template test', function() {
     });
 
     it('drops the rating if the col count is too small', function() {
-      var raw = jump(songs, songs[0], ['red', 'hot'], 45, 30, true),
+      var raw = jump(songs, songs[0], 'red hot', 45, true),
           actual = raw.map(chalk.stripColor, chalk),
           expected = [
             'Red Hot Chili Peppers - Californication     ',
@@ -63,7 +63,7 @@ describe('jump template test', function() {
     });
 
     it('shortens the name if the col count is too small', function() {
-      var raw = jump(songs, songs[0], ['red', 'hot'], 26, 30, true),
+      var raw = jump(songs, songs[0], 'red hot', 26, true),
           actual = raw.map(chalk.stripColor, chalk),
           expected = [
             'Red Hot Chili Peppers - C',
@@ -76,7 +76,7 @@ describe('jump template test', function() {
     });
 
     it('shortens the name to 1 character', function() {
-      var raw = jump(songs, songs[0], ['red', 'hot'], 2, 30, true),
+      var raw = jump(songs, songs[0], 'red hot', 2, true),
           actual = raw.map(chalk.stripColor, chalk),
           expected = ['R', 'R'];
 
