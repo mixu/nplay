@@ -6,13 +6,14 @@ CLI Node music player - a frontend for mplayer with Winamp key bindings.
 
 Features:
 
-- smooth, one-character interactions with Winamp key bindings:
+- Smooth, one-character interactions with Winamp key bindings:
     - `z - x - c - v - b`: the bottom row of your keyboard works for playback
     - `j` to enter jump mode 
-- supports *jump to file* with autocomplete
-- songs can have ratings
-- the playlist can be sorted by rating, most frequently played, last played
-- shuffle, filter and repeat modes
+- Supports *jump to file* with autocomplete
+- Songs can be rated (1 - 5 stars); play count and last played are also tracked. 
+- Works on all major platforms, even the JSON metadata file is portable.  
+- The playlist can be sorted by rating, most frequently played, last played
+- Shuffle, filter and repeat modes
 
 ## Install
 
@@ -76,6 +77,8 @@ When no arguments are passed, nplay reads `~/.nplay.json` and uses the paths set
     }
 
 ## Rendering with utf-8 characters
+
+To toggle between utf rendering and ASCII rendering, press `u`.
 
 On OSX and Windows, nplay does not use utf-8 characters for rendering, because the default terminal font produces terrible rendering. 
 
