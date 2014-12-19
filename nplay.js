@@ -5,6 +5,7 @@ var fs = require('fs'),
 
 var existsSync = (fs.existsSync ? fs.existsSync : path.existsSync),
     isList = process.argv.indexOf('--ls') > -1,
+    isMerge = process.argv.indexOf('--merge') > -1,
     homePath = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'],
     shouldReadConfig = (process.argv.length <= 2 || isList);
 
@@ -25,6 +26,47 @@ var pi = require('pipe-iterators'),
 
 if (shouldReadConfig) {
   config = require(homePath + '/.nplay.json');
+}
+
+if (isMerge) {
+  var db = require(homePath + '/.nplay.db.json');
+  // merge database content, then exit
+  var otherFile = process.argv[process.argv.indexOf('--merge') + 1];
+  if (!otherFile) {
+    console.log('--merge target not set!');
+    return;
+  }
+  otherFile = path.resolve(process.cwd, otherFile);
+  var other = require(otherFile);
+  Object.keys(other).forEach(function(key) {
+    if (typeof db[key] !== 'object') {
+      // console.log('Add entry', key, db[key], other[key]);
+      db[key] = other[key];
+    } else {
+      // merge
+      Object.keys(other[key]).forEach(function(subkey) {
+        var target = (!isNaN(parseInt(db[key][subkey], 10)) ? parseInt(db[key][subkey], 10) : db[key][subkey]),
+            source = (!isNaN(parseInt(other[key][subkey], 10)) ? parseInt(other[key][subkey], 10) : other[key][subkey]);
+
+        if (target == source) {
+          return; // skip
+        }
+        if (!isNaN(target) && !isNaN(source)) {
+          if (source < target) {
+            return; // skip
+          }
+          // for numeric keys, use max
+          db[key][subkey] = source;
+        } else {
+          // all other keys: use the merge target value
+          db[key][subkey] = source;
+        }
+      });
+    }
+  });
+
+  console.log(JSON.stringify(db, null, 2));
+  return;
 }
 
 // allow explicit override in the config file
