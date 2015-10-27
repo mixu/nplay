@@ -45,8 +45,14 @@ Install dependencies:
     l - Last played mode (sort by last played)
     1...5 - Rate song
     j - Jump
-    Up/Down/Page Up/Page Down/Home/End - Move in the playlist
     Ctrl-C - Exit
+
+### Moving around in the playlist
+
+- Esc: return to currently playing song
+- Up / Down arrows: Move up and down one song at a time
+- Page up / Page down: Move up and down half a screen at a time 
+- Home / End: Move to the beginning / end of the playlist
 
 ## Playback modes
 
